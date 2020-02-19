@@ -16,8 +16,8 @@ int startTime = 0; // time starts when the first click is captured
 int finishTime = 0; //records the time of the final click
 int hits = 0; //number of successful clicks
 int misses = 0; //number of missed clicks
-int hintInterval = 3;
-int pointerSize = 380;
+int hintInterval = 1;
+int pointerSize = 50;
 int pointerTransparent = 100;
 int autoClickTimes = 16;
 Robot robot; //initalized in setup 
@@ -105,7 +105,10 @@ void draw()
   for (int i = 0; i < 16; i++)// for all button
     drawButton(i); //draw button
 
-  fill(255, 0, 0, pointerTransparent); // set fill color to translucent red
+  Rectangle bounds = getButtonLocation(trials.get(trialNum));
+  boolean hit = circleRect(mouseX,mouseY,pointerSize/2, bounds.x,bounds.y,bounds.width,bounds.height);
+  if(hit) fill(0, 255, 0, pointerTransparent); // set fill color to translucent red
+  else fill(255, 0, 0, pointerTransparent);
   ellipse(mouseX, mouseY, pointerSize, pointerSize); //draw user cursor as a circle with a diameter of 20
   
   //drawArrows();
@@ -114,6 +117,7 @@ void draw()
   // draw a red line to the next button
   if(trialNum % hintInterval == 0)
   drawArrows();
+  
  
 }
 
